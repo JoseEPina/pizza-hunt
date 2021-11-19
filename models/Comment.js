@@ -52,7 +52,7 @@ const CommentSchema = new Schema(
    }
 );
 
-commentSchema.virtual('replyCount').get(function () {
+CommentSchema.virtual('replyCount').get(function () {
    return this.replies.length;
 });
 

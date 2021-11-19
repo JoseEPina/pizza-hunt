@@ -34,7 +34,7 @@ const commentController = {
          })
          .catch((err) => res.json(err));
    },
-
+   // Remove reply 
    removeReply({ params }, res) {
       Comment.findOneAndUpdate(
          { _id: params.commentId },

@@ -1,4 +1,3 @@
-
 const $backBtn = document.querySelector('#back-btn');
 const $pizzaName = document.querySelector('#pizza-name');
 const $createdBy = document.querySelector('#created-by');
@@ -82,8 +81,7 @@ function printComment(comment) {
         </div>
 
         <button class="mt-2 btn display-block w-100">Add Reply</button>
-      </form>
-  `;
+      </form>`;
 
    commentDiv.innerHTML = commentContent;
    $commentSection.prepend(commentDiv);
@@ -134,26 +132,48 @@ function handleNewCommentSubmit(event) {
 }
 
 function handleNewReplySubmit(event) {
-   event.preventDefault();
+  event.preventDefault();
 
-   if (!event.target.matches('.reply-form')) {
-      return false;
-   }
+  if (!event.target.matches('.reply-form')) {
+    return false;
+  }
 
-   const commentId = event.target.getAttribute('data-commentid');
+  const commentId = event.target.getAttribute('data-commentid');
 
-   const writtenBy = event.target.querySelector('[name=reply-name]').value;
-   const replyBody = event.target.querySelector('[name=reply]').value;
+  const writtenBy = event.target.querySelector('[name=reply-name]').value;
+  const replyBody = event.target.querySelector('[name=reply]').value;
 
-   if (!replyBody || !writtenBy) {
-      return false;
-   }
+  if (!replyBody || !writtenBy) {
+    return false;
+  }
 
-   const formData = { writtenBy, replyBody };
+  const formData = { writtenBy, replyBody };
+
+  fetch(`/api/comments/${pizzaId}/${commentId}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+      response.json();
+    })
+    .then(commentResponse => {
+      console.log(commentResponse);
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
-$backBtn.addEventListener('click', function () {
-   window.history.back();
+$backBtn.addEventListener('click', function() {
+  window.history.back();
 });
 
 $newCommentForm.addEventListener('submit', handleNewCommentSubmit);
