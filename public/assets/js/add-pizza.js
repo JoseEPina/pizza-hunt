@@ -59,8 +59,9 @@ const handlePizzaSubmit = (event) => {
          alert('Pizza successfully created!');
          console.log(postResponse);
       })
-      .catch((error) => {
-         console.error(error);
+      .catch((err) => {
+         console.log(err);
+         saveRecord(formData)
       });
 };
 
