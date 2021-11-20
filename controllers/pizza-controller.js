@@ -8,9 +8,9 @@ const pizzaController = {
       Pizza.find({})
          .populate({
             path: 'comments',
-            select: '-__v', //The minus sign - in front of the field indicates that we 
-         }) // don't want it to be returned. If we didn't have it, it would mean that 
-            // it would return only the __v field.
+            select: '-__v', //The minus sign - in front of the field indicates that we
+         }) // don't want it to be returned. If we didn't have it, it would mean that
+         // it would return only the __v field.
          .select('-__v') //
          .sort({ _id: -1 })
          .then((dbPizzaData) => res.json(dbPizzaData))
@@ -51,7 +51,7 @@ const pizzaController = {
 
    // PUT to update pizza by ID
    updatePizza({ params, body }, res) {
-      Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+      Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
          .then((dbPizzaData) => {
             if (!dbPizzaData) {
                res.status(404).json({ message: 'No pizza found with this id!' });
