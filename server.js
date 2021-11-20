@@ -10,7 +10,13 @@ app.use(express.static('public'));
 
 app.use(require('./routes'));
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pizza-hunt');
+mongoose
+   .connect(process.env.MONGODB_URI || 'mongodb://localhost/pizza-hunt', {
+      //useFindAndModify: false, //! use only for mongoose version 6+
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+   })
+   .catch((err) => console.error(err));
 
 // Use this to log mongo queries being executed!
 mongoose.set('debug', true);
