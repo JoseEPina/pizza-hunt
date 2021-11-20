@@ -57,11 +57,12 @@ const handlePizzaSubmit = (event) => {
       .then((response) => response.json())
       .then((postResponse) => {
          alert('Pizza successfully created!');
-         console.log(postResponse);
+         //console.log(postResponse);
+         document.location.reload(); // reload page to submit new pizza
       })
       .catch((err) => {
          console.log(err);
-         saveRecord(formData)
+         saveRecord(formData);
       });
 };
 
